@@ -1,8 +1,8 @@
 ---
-title: 5. Rust Maturity
+title: 5. Rust Ecosystem
 ---
 
-# Rust Maturity
+# Rust Ecosystem
 Rust is still a relatively new language. Although the ecosystem has grown tremendously in the recent years many areas is still in early development. To know the status of a specific area there is a family of websites called `arewe___yet?` Usually searching for `Rust are we <keyword> yet` will yield some good results.
 
 ## Links
