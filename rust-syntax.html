@@ -1,0 +1,253 @@
+<!doctype html>
+
+<html lang="en">
+
+<head>
+    <meta charset="utf-8">
+
+    <title>3. Rust Syntax</title>
+    <meta name="description" content="Documentation for Rust Seminar">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Source+Sans+Pro:ital,wght@0,400;0,600;0,700;1,400;1,600;1,700&display=swap"
+        rel="stylesheet">
+
+    <link rel="stylesheet" type="text/css" href="/assets/normalize.css?v=1723468733"
+        media="screen" />
+    <link rel="stylesheet" type="text/css" href="/assets/doctave-style.css?v=1723468733"
+        media="screen" />
+    <link rel="stylesheet" type="text/css" href="/assets/katex.css?v=1723468733" media="screen" />
+    <link rel="stylesheet" type="text/css" href="/assets/prism-ghcolors.css?v=1723468733"
+        media="screen" />
+
+    <script>
+        var DOCTAVE_TIMESTAMP = "1723468733";
+        var BASE_PATH = "/";
+        var color = localStorage.getItem('doctave-color')
+
+        if (color === 'dark') {
+            document.getElementsByTagName('html')[0].classList.remove('light');
+            document.getElementsByTagName('html')[0].classList.add('dark');
+        } else {
+            document.getElementsByTagName('html')[0].classList.remove('dark');
+            document.getElementsByTagName('html')[0].classList.add('light');
+        }
+    </script>
+
+    
+</head>
+
+<body>
+    <label for='menu-toggle-switch' class='menu-toggle-button'>
+        ☰
+    </label>
+    <input type="checkbox" id="menu-toggle-switch" value='0' />
+    <div class='page'>
+        <div class='header'>
+            <div class='logo'>
+                
+                <a href="/">
+                    <img src="/assets/logo.jpg" alt='Rust Seminar logo'></img>
+                </a>
+                
+                <h2 class='project-name'>
+                    <a href="/">
+                        Rust Seminar
+                    </a>
+                </h2>
+            </div>
+            <div class='search'>
+                <form id='search-form'>
+    <input type='text' id='search-box' autocomplete="off" placeholder="Search..."></input>
+    <span class='search-icon'>S</span>
+    <ul id='search-results'></ul>
+</form>
+
+            </div>
+            <div class='header-dummy-right'>
+            </div>
+        </div>
+        <div class='container'>
+            <div class='sidebar-left'>
+                <nav class='site-nav'>
+    <ul>
+        
+            <li><a href="/getting-started">1. Getting Started</a></li>
+            
+        
+            <li><a href="/rust-crates">2. Rust Crates</a></li>
+            
+        
+            <li><a class="active" href="/rust-syntax">3. Rust Syntax</a></li>
+            
+        
+            <li><a href="/rust-examples">4. Rust Examples</a></li>
+            
+        
+            <li><a href="/rust-ecosystem">5. Rust Ecosystem</a></li>
+            
+        
+    </ul>
+    <span id='light-dark-mode-switch'>
+        <svg xmlns="http://www.w3.org/2000/svg" id="dark-mode-icon" viewBox="0 0 20 20" fill="currentColor">
+            <path d="M17.293 13.293A8 8 0 016.707 2.707a8.001 8.001 0 1010.586 10.586z" />
+        </svg>
+
+        <svg xmlns="http://www.w3.org/2000/svg" id="light-mode-icon" viewBox="0 0 20 20" fill="currentColor">
+            <path fill-rule="evenodd" d="M10 2a1 1 0 011 1v1a1 1 0 11-2 0V3a1 1 0 011-1zm4 8a4 4 0 11-8 0 4 4 0 018 0zm-.464 4.95l.707.707a1 1 0 001.414-1.414l-.707-.707a1 1 0 00-1.414 1.414zm2.12-10.607a1 1 0 010 1.414l-.706.707a1 1 0 11-1.414-1.414l.707-.707a1 1 0 011.414 0zM17 11a1 1 0 100-2h-1a1 1 0 100 2h1zm-7 4a1 1 0 011 1v1a1 1 0 11-2 0v-1a1 1 0 011-1zM5.05 6.464A1 1 0 106.465 5.05l-.708-.707a1 1 0 00-1.414 1.414l.707.707zm1.414 8.486l-.707.707a1 1 0 01-1.414-1.414l.707-.707a1 1 0 011.414 1.414zM4 11a1 1 0 100-2H3a1 1 0 000 2h1z" clip-rule="evenodd" />
+        </svg>
+    </span>
+</nav>
+
+            </div>
+            <div class='doctave-content'>
+                <h1 id="rust-syntax">Rust Syntax</h1>
+<p>Rust is a systems language but sometimes feels like writing high level code. The syntax varies from very simple to extremely complex. Extremely optimized Rust code can be complicated to read but most of the time it's simple.</p>
+<h2 id="functions">Functions</h2>
+<p>Functions in Rust is declared using the <code>fn</code> keyword followed by function name and parameter list, optionally a return value type can also be defined. The function body is surrounded by <code>{</code> <code>}</code> braces.</p>
+<pre><code class="language-rust">fn hello() {
+    println!("Hello!");
+}
+
+fn sum(a: usize, b: usize) -&gt; usize {
+    a + b
+}
+</code></pre>
+<p>It's also possible to declare the visibility of functions by adding visibility keywords in front of fn.</p>
+<pre><code class="language-rust">// public function
+pub fn goodbye() {
+    println!("Goodbye!");
+}
+
+// public function in crate scope
+pub(crate) fn foo() -&gt; &amp;'static str {
+    "bar"
+}
+</code></pre>
+<p>Reading these examples you may have noticed there's no <code>return</code> statement, even though some of the functions return something. In Rust the <code>return</code> statement is optional and if the last expression inside a function is not ended with a <code>;</code> it will be implicitly returned.</p>
+<pre><code class="language-rust">fn a_number() -&gt; usize {
+    69
+}
+
+fn another_number() -&gt; usize {
+    return 420;
+}
+</code></pre>
+<p>Both of the previous examples returns a number with the type <code>usize</code>. Note the missing <code>;</code> in the <code>a_number</code> function.</p>
+<h2 id="variables">Variables</h2>
+<p>Variables in Rust is immutable by default, this means once they've been assigned a value they can't change. </p>
+<pre><code class="language-rust">let x = 42;
+</code></pre>
+<p>The type of <code>x</code> in the previous example is implicitly determined by the compiler. It's also possible to explicitly declare what type a variable should have.</p>
+<pre><code class="language-rust">let x: usize = 42;
+</code></pre>
+<p>Trying to reassign the value of <code>x</code> in the previous example would result in a compilation error. To get around this the variables can be marked <em>mutable</em> using the <code>mut</code> keyword.</p>
+<pre><code class="language-rust">let mut x = 42;
+x = 69;
+</code></pre>
+<h2 id="program-control-flow">Program Control Flow</h2>
+<p>Rust has if-statements and loops to control the program flow.</p>
+<pre><code class="language-rust">if x == 42 {
+    println!("x is 42");
+} else {
+    println!("x is not 42");
+}
+</code></pre>
+<pre><code class="language-rust">// Iterate over range of numbers
+for x in 0..100 {
+    println!("{}", x);
+}
+
+// Endless loop
+loop {
+    break; // the `break` keyword will exit any loop
+}
+
+// While loop
+let running = true;
+while running {
+    running = false;    
+}
+
+</code></pre>
+<h2 id="pattern-matching">Pattern Matching</h2>
+<p>A very powerful concept in Rust is pattern matching, the Rust compiler ensures every pattern is matched.</p>
+<pre><code class="language-rust">let optional = Some(42);
+
+match optional {
+    Some(42) =&gt; { println!("matched 42"); },
+    Some(_) =&gt; { println!("matched another number"); },
+    None =&gt; { println!("there is no number") },
+}
+</code></pre>
+<p>Patterns or values can be skipped by using the <code>_</code> character.</p>
+<pre><code class="language-rust">let n = 69;
+
+match n {
+    69 =&gt; { println!("niiceee"); }
+    _ =&gt; { println!("meh"); }
+}
+</code></pre>
+<h2 id="others">Others</h2>
+<p>These examples just scratches the surface of some of the more common syntax in Rust. The scope of this seminar doesn't include every single example. When writing or reading code and coming across some syntax that looks weird, please come and talk to me and I will be happy to explain or point to resources explaining it.</p>
+
+            </div>
+            <div class='sidebar-right'>
+                <div class='page-nav' id='page-nav'>
+                    <p class='page-nav-header'>On this page</p>
+                    <ul>
+                        
+                        <li class='page-nav-level-1'>
+                            <a href='#rust-syntax'>Rust Syntax</a>
+                        </li>
+                        
+                        <li class='page-nav-level-2'>
+                            <a href='#functions'>Functions</a>
+                        </li>
+                        
+                        <li class='page-nav-level-2'>
+                            <a href='#variables'>Variables</a>
+                        </li>
+                        
+                        <li class='page-nav-level-2'>
+                            <a href='#program-control-flow'>Program Control Flow</a>
+                        </li>
+                        
+                        <li class='page-nav-level-2'>
+                            <a href='#pattern-matching'>Pattern Matching</a>
+                        </li>
+                        
+                        <li class='page-nav-level-2'>
+                            <a href='#others'>Others</a>
+                        </li>
+                        
+                    </ul>
+                </div>
+            </div>
+            <div class='wave-container'>
+                <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 320">
+                    <path fill-opacity="0.35"
+                        d="M0,192L60,213.3C120,235,240,277,360,277.3C480,277,600,235,720,192C840,149,960,107,1080,122.7C1200,139,1320,213,1380,250.7L1440,288L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z">
+                    </path>
+                    <path fill-opacity="0.5"
+                        d="M0,160L60,181.3C120,203,240,245,360,229.3C480,213,600,139,720,138.7C840,139,960,213,1080,229.3C1200,245,1320,203,1380,181.3L1440,160L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z">
+                    </path>
+                    <path fill-opacity="0.2"
+                        d="M0,224L60,197.3C120,171,240,117,360,117.3C480,117,600,171,720,186.7C840,203,960,181,1080,186.7C1200,192,1320,224,1380,240L1440,256L1440,320L1380,320C1320,320,1200,320,1080,320C960,320,840,320,720,320C600,320,480,320,360,320C240,320,120,320,60,320L0,320Z">
+                    </path>
+                </svg>
+                <p>Powered by <a href='https://cli.doctave.com' target='_blank'>Doctave</a></p>
+            </div>
+        </div>
+    </div>
+    <script type="text/javascript" src="/assets/katex.js?v=1723468733"></script>
+    <script type="text/javascript" src="/assets/mermaid.js?v=1723468733"></script>
+    <script type="text/javascript" src="/assets/elasticlunr.js?v=1723468733"></script>
+    <script type="text/javascript" src="/assets/prism.js?v=1723468733"></script>
+    <script type="text/javascript" src="/assets/doctave-app.js?v=1723468733"></script>
+
+    
+</body>
+
+</html>
