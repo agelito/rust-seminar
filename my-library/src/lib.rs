@@ -37,7 +37,6 @@ pub fn mul(left: usize, right: usize) -> usize {
     left * right
 }
 
-
 /// Divide two numbers and return the result
 ///
 /// The left parameter is divided with the right parameter.
@@ -66,7 +65,7 @@ pub fn div(left: usize, right: usize) -> usize {
 ///
 /// ```
 /// let result = my_library::sub(16, 5);
-/// assert_eq(result, 11);
+/// assert_eq!(result, 11);
 /// ```
 pub fn sub(left: usize, right: usize) -> usize {
     left - right

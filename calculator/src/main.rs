@@ -27,10 +27,10 @@ pub enum Operator {
 impl Operator {
     pub fn format_result(&self, result: usize) -> String {
         match self {
-            Operator::Add { left, right } =>  format!("{} + {} = {}", left, right, result),
-            Operator::Multiply {left, right  } => format!("{} * {} = {}", left, right, result),
-            Operator::Subtract {left, right  } => format!("{} - {} = {}", left, right, result),
-            Operator::Divide {left, right  } => format!("{} / {} = {}", left, right, result),
+            Operator::Add { left, right } => format!("{} + {} = {}", left, right, result),
+            Operator::Multiply { left, right } => format!("{} * {} = {}", left, right, result),
+            Operator::Subtract { left, right } => format!("{} - {} = {}", left, right, result),
+            Operator::Divide { left, right } => format!("{} / {} = {}", left, right, result),
         }
     }
 
