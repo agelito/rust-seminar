@@ -1,3 +1,7 @@
+---
+title: The Rust Programming Language
+---
+
 # The Rust Programming Language
 
 Rust is a compiled language with a strong type system. Compiled rust run at native speed and is nearly as energy efficient as C. 
