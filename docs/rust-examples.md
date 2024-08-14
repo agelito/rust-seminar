@@ -3,7 +3,7 @@ title: 4. Rust Examples
 ---
 
 # Rust Examples
-I have included some example crates for this seminar. 
+I have included some example crates for this seminar. The examples can be found at the GitHub repository [rust-seminar](https://github.com/agelito/rust-seminar).
 
 ### hello-world
 The `hello-world` crate is just a basic hello world application.

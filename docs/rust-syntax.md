@@ -3,7 +3,7 @@ title: 3. Rust Syntax
 ---
 
 # Rust Syntax
-Rust is a systems language but sometimes feels like writing high level code. The syntax varies from very simple to extremely complex. Extremely optimized Rust code can be complicated to read but most of the time it's simple.
+Rust is a systems language which feels like writing high level code. The syntax varies from very simple to extremely complex. Extremely optimized Rust code can be complicated to read but most of the time it's clear and easy to follow and understand.
 
 ## Functions
 Functions in Rust is declared using the `fn` keyword followed by function name and parameter list, optionally a return value type can also be defined. The function body is surrounded by `{` `}` braces.
