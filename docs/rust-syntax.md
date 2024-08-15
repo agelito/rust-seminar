@@ -89,7 +89,7 @@ loop {
 }
 
 // While loop
-let running = true;
+let mut running = true;
 while running {
     running = false;    
 }
