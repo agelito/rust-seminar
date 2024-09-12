@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
 
-    <title>1. Getting Started</title>
+    <title>API Server</title>
     <meta name="description" content="Documentation for Rust Seminar">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -73,7 +73,7 @@
                 <nav class='site-nav'>
     <ul>
         
-            <li><a class="active" href="/rust-seminar/getting-started">1. Getting Started</a></li>
+            <li><a href="/rust-seminar/getting-started">1. Getting Started</a></li>
             
         
             <li><a href="/rust-seminar/rust-crates">2. Rust Crates</a></li>
@@ -88,7 +88,7 @@
             <li><a href="/rust-seminar/rust-ecosystem">5. Rust Ecosystem</a></li>
             
         
-            <li><a href="/rust-seminar/api-server">API Server</a></li>
+            <li><a class="active" href="/rust-seminar/api-server">API Server</a></li>
             
                 <ul>
     
@@ -125,41 +125,44 @@
 
             </div>
             <div class='doctave-content'>
-                <h1 id="getting-started">Getting Started</h1>
-<h2 id="the-rust-programming-language">The Rust Programming Language</h2>
-<p>The best way to get started with Rust is to read <em>The Rust Programming Language</em> book. The book is available for free online and provides a very good introduction to the language.</p>
-<p><a href="https://doc.rust-lang.org/book/">The Rust Programming Language</a></p>
-<p>I recommend reading the book at a glance first, skipping over things that seem too complicated until feeling ready to learn them. Start making smaller applications, services, or tools while working through the book. Use the book as a reference for syntax or Rust programming concepts.</p>
-<h2 id="installing-rust">Installing Rust</h2>
-<p>The recommended way to install the rust compiler and other associated tools is to use the <code>rustup</code> utility. After installed <code>rustup</code> can be used to upgrade, list, remove different versions of Rust.</p>
-<p>See the <a href="https://doc.rust-lang.org/book/ch01-01-installation.html">Installation</a> section of the book for more information.</p>
-<h2 id="cargo">Cargo</h2>
-<p>The <code>rustup</code> utility will install the <code>Cargo</code> command line tool. <code>Cargo</code> is the build system and package manager of Rust.</p>
-<h3 id="creating-rust-projects">Creating Rust Projects</h3>
-<pre><code class="language-sh"># Creates a new binary crate called `hello-world`
-cargo new hello-world
-
-# Creates a new library crate called `my-library`
-cargo new --lib my-library
+                <h1 id="api-server">API Server</h1>
+<p>This section is a walkthrough for writing a server exposing a simple API in Rust. The API server
+will expose an API for storing and retrieving movie information. We will not connect to any database
+and instead store all state in memory.</p>
+<h2 id="specification">Specification</h2>
+<h3 id="endpoints">Endpoints</h3>
+<table><thead><tr><th>Endpoint</th><th>Description</th></tr></thead><tbody>
+<tr><td><code>GET /api/v1/status</code></td><td>Health check endpoint.</td></tr>
+<tr><td><code>GET /api/v1/movies</code></td><td>Returns a list of all movies.</td></tr>
+<tr><td><code>GET /api/v1/movies/{:id}</code></td><td>Returns a single movie by ID.</td></tr>
+<tr><td><code>PUT /api/v1/movies/{:id}</code></td><td>Updates a single movie by ID.</td></tr>
+<tr><td><code>DELETE /api/v1/movies/{:id}</code></td><td>Delete a movie by ID.</td></tr>
+<tr><td><code>POST /api/v1/movies</code></td><td>Create a new movie.</td></tr>
+</tbody></table>
+<h3 id="request-/-response">Request / Response</h3>
+<h4 id="movie-response">Movie Response</h4>
+<pre><code class="language-json">{
+    "id": "string",
+    "title": "string",
+    "director": "string",
+    "release_year": "int",
+}
 </code></pre>
-<h3 id="installing-dependencies">Installing Dependencies</h3>
-<pre><code class="language-sh"># Add the dependencies `axum` and `serde`
-cargo add axum serde
+<h4 id="create-movie-request">Create Movie Request</h4>
+<pre><code class="language-json">{
+    "title": "string",
+    "director": "string",
+    "release_year": "int"
+}
 </code></pre>
-<h3 id="running-project">Running Project</h3>
-<pre><code class="language-sh"># Run without arguments
-cargo run
-
-# Run with arguments
-cargo run -- arg1 arg2
+<h4 id="update-movie-request">Update Movie Request</h4>
+<pre><code class="language-json">{
+    "id": "string",
+    "title": "string",
+    "director": "string",
+    "release_year": "int"
+}
 </code></pre>
-<h3 id="running-tests">Running Tests</h3>
-<pre><code class="language-sh">cargo test
-</code></pre>
-<h3 id="generate-and-open-documentation">Generate and Open Documentation</h3>
-<pre><code class="language-sh">cargo doc --open
-</code></pre>
-<p>Read more about <code>Cargo</code> in the book at the <a href="https://doc.rust-lang.org/book/ch01-03-hello-cargo.html">Cargo</a> section.</p>
 
             </div>
             <div class='sidebar-right'>
@@ -168,39 +171,31 @@ cargo run -- arg1 arg2
                     <ul>
                         
                         <li class='page-nav-level-1'>
-                            <a href='#getting-started'>Getting Started</a>
+                            <a href='#api-server'>API Server</a>
                         </li>
                         
                         <li class='page-nav-level-2'>
-                            <a href='#the-rust-programming-language'>The Rust Programming Language</a>
-                        </li>
-                        
-                        <li class='page-nav-level-2'>
-                            <a href='#installing-rust'>Installing Rust</a>
-                        </li>
-                        
-                        <li class='page-nav-level-2'>
-                            <a href='#cargo'>Cargo</a>
+                            <a href='#specification'>Specification</a>
                         </li>
                         
                         <li class='page-nav-level-3'>
-                            <a href='#creating-rust-projects'>Creating Rust Projects</a>
+                            <a href='#endpoints'>Endpoints</a>
                         </li>
                         
                         <li class='page-nav-level-3'>
-                            <a href='#installing-dependencies'>Installing Dependencies</a>
+                            <a href='#request-/-response'>Request / Response</a>
                         </li>
                         
-                        <li class='page-nav-level-3'>
-                            <a href='#running-project'>Running Project</a>
+                        <li class='page-nav-level-4'>
+                            <a href='#movie-response'>Movie Response</a>
                         </li>
                         
-                        <li class='page-nav-level-3'>
-                            <a href='#running-tests'>Running Tests</a>
+                        <li class='page-nav-level-4'>
+                            <a href='#create-movie-request'>Create Movie Request</a>
                         </li>
                         
-                        <li class='page-nav-level-3'>
-                            <a href='#generate-and-open-documentation'>Generate and Open Documentation</a>
+                        <li class='page-nav-level-4'>
+                            <a href='#update-movie-request'>Update Movie Request</a>
                         </li>
                         
                     </ul>

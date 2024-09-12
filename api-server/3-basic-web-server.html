@@ -5,7 +5,7 @@
 <head>
     <meta charset="utf-8">
 
-    <title>1. Getting Started</title>
+    <title>3. Basic Web Server</title>
     <meta name="description" content="Documentation for Rust Seminar">
     <meta name="viewport" content="width=device-width, initial-scale=1">
 
@@ -73,7 +73,7 @@
                 <nav class='site-nav'>
     <ul>
         
-            <li><a class="active" href="/rust-seminar/getting-started">1. Getting Started</a></li>
+            <li><a href="/rust-seminar/getting-started">1. Getting Started</a></li>
             
         
             <li><a href="/rust-seminar/rust-crates">2. Rust Crates</a></li>
@@ -98,7 +98,7 @@
         <li><a href="/rust-seminar/api-server/2-hello-tokio">2. Hello Tokio</a></li>
         
     
-        <li><a href="/rust-seminar/api-server/3-basic-web-server">3. Basic Web Server</a></li>
+        <li><a class="active" href="/rust-seminar/api-server/3-basic-web-server">3. Basic Web Server</a></li>
         
     
         <li><a href="/rust-seminar/api-server/4-prepare-server-routes">4. Prepare Server Routes</a></li>
@@ -125,41 +125,38 @@
 
             </div>
             <div class='doctave-content'>
-                <h1 id="getting-started">Getting Started</h1>
-<h2 id="the-rust-programming-language">The Rust Programming Language</h2>
-<p>The best way to get started with Rust is to read <em>The Rust Programming Language</em> book. The book is available for free online and provides a very good introduction to the language.</p>
-<p><a href="https://doc.rust-lang.org/book/">The Rust Programming Language</a></p>
-<p>I recommend reading the book at a glance first, skipping over things that seem too complicated until feeling ready to learn them. Start making smaller applications, services, or tools while working through the book. Use the book as a reference for syntax or Rust programming concepts.</p>
-<h2 id="installing-rust">Installing Rust</h2>
-<p>The recommended way to install the rust compiler and other associated tools is to use the <code>rustup</code> utility. After installed <code>rustup</code> can be used to upgrade, list, remove different versions of Rust.</p>
-<p>See the <a href="https://doc.rust-lang.org/book/ch01-01-installation.html">Installation</a> section of the book for more information.</p>
-<h2 id="cargo">Cargo</h2>
-<p>The <code>rustup</code> utility will install the <code>Cargo</code> command line tool. <code>Cargo</code> is the build system and package manager of Rust.</p>
-<h3 id="creating-rust-projects">Creating Rust Projects</h3>
-<pre><code class="language-sh"># Creates a new binary crate called `hello-world`
-cargo new hello-world
+                <h1 id="3.-basic-web-server">3. Basic Web Server</h1>
+<p>Now that <code>tokio</code> is working it's time to initialize and run the <code>axum</code> server framework. There's
+some boilerplate code to set up the tcp listener and router.</p>
+<p>Replace the <code>main.rs</code> content with the following:</p>
+<pre><code class="language-rust">use axum::http::StatusCode;
+use axum::response::IntoResponse;
+use axum::routing::get;
+use axum::Router;
+use tokio::net::TcpListener;
 
-# Creates a new library crate called `my-library`
-cargo new --lib my-library
-</code></pre>
-<h3 id="installing-dependencies">Installing Dependencies</h3>
-<pre><code class="language-sh"># Add the dependencies `axum` and `serde`
-cargo add axum serde
-</code></pre>
-<h3 id="running-project">Running Project</h3>
-<pre><code class="language-sh"># Run without arguments
-cargo run
+#[tokio::main]
+async fn main() {
+    let listener = TcpListener::bind("0.0.0.0:8000")
+        .await
+        .expect("couldn't create tcp listener");
 
-# Run with arguments
-cargo run -- arg1 arg2
+    let router = Router::new().route("/api/v1/status", get(get_status));
+
+    axum::serve(listener, router)
+        .await
+        .expect("couldn't serve api");
+}
+
+async fn get_status() -&gt; impl IntoResponse {
+    (StatusCode::OK, "SERVER_OK")
+}
 </code></pre>
-<h3 id="running-tests">Running Tests</h3>
-<pre><code class="language-sh">cargo test
+<p>Run the application using <code>cargo run</code> and then try sending a <code>GET</code> request to
+<code>localhost:8000/api/v1/status</code>. The output should look like this:</p>
+<pre><code class="language-sh">❯ curl localhost:8000/api/v1/status
+SERVER_OK
 </code></pre>
-<h3 id="generate-and-open-documentation">Generate and Open Documentation</h3>
-<pre><code class="language-sh">cargo doc --open
-</code></pre>
-<p>Read more about <code>Cargo</code> in the book at the <a href="https://doc.rust-lang.org/book/ch01-03-hello-cargo.html">Cargo</a> section.</p>
 
             </div>
             <div class='sidebar-right'>
@@ -168,39 +165,7 @@ cargo run -- arg1 arg2
                     <ul>
                         
                         <li class='page-nav-level-1'>
-                            <a href='#getting-started'>Getting Started</a>
-                        </li>
-                        
-                        <li class='page-nav-level-2'>
-                            <a href='#the-rust-programming-language'>The Rust Programming Language</a>
-                        </li>
-                        
-                        <li class='page-nav-level-2'>
-                            <a href='#installing-rust'>Installing Rust</a>
-                        </li>
-                        
-                        <li class='page-nav-level-2'>
-                            <a href='#cargo'>Cargo</a>
-                        </li>
-                        
-                        <li class='page-nav-level-3'>
-                            <a href='#creating-rust-projects'>Creating Rust Projects</a>
-                        </li>
-                        
-                        <li class='page-nav-level-3'>
-                            <a href='#installing-dependencies'>Installing Dependencies</a>
-                        </li>
-                        
-                        <li class='page-nav-level-3'>
-                            <a href='#running-project'>Running Project</a>
-                        </li>
-                        
-                        <li class='page-nav-level-3'>
-                            <a href='#running-tests'>Running Tests</a>
-                        </li>
-                        
-                        <li class='page-nav-level-3'>
-                            <a href='#generate-and-open-documentation'>Generate and Open Documentation</a>
+                            <a href='#3.-basic-web-server'>3. Basic Web Server</a>
                         </li>
                         
                     </ul>
